@@ -40,6 +40,7 @@ print_help() {
 	echo "options:"
 	echo "-h, --help        show quick help"
 	echo "-c, --create      create a new tmux layout"
+	echo "-e, --edit        edit selected tmux layout"
 	echo " "
 	echo "logs available at $LOG_FILE"
 }
