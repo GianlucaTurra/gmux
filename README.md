@@ -21,7 +21,7 @@ Clone this repo (I'm sure you know how) and run:
 sudo cp ./gmux.sh /usr/bin/gmux
 ```
 
-Or create and alias... Or call directly the script idk.
+Or create an alias... Or call directly the script idk.
 
 There you go.
 
