@@ -3,7 +3,7 @@
 set -o errexit
 set -o nounset
 
-LOCAL_FOLDER="$HOME/gmux"
+LOCAL_FOLDER="$HOME/.local/share/gmux"
 LAYOUT_FOLDER="$LOCAL_FOLDER/layouts"
 TEMPLATE_FOLDER="$LOCAL_FOLDER/templates"
 BASIC_TEMPLATE="$TEMPLATE_FOLDER/template"
