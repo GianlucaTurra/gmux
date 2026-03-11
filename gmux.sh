@@ -41,6 +41,7 @@ print_help() {
 	echo "-h, --help        show quick help"
 	echo "-c, --create      create a new tmux layout"
 	echo "-e, --edit        edit selected tmux layout"
+	echo "-d, --delete      delete selected tmux layout"
 	echo " "
 	echo "logs available at $LOG_FILE"
 }
@@ -76,6 +77,14 @@ edit_layout() {
 	fi
 }
 
+# Delete a selected layout file
+delete_layout() {
+	CHOICE=$(ls -1 $LAYOUT_FOLDER | sed -e 's/\.gmux.sh$//' | gum filter)
+	if [ -n "$CHOICE" ]; then
+		rm "$LAYOUT_FOLDER/$CHOICE.gmux.sh"
+	fi
+}
+
 # -----------------------------------------------------------------------------
 # ACTUAL FACTUAL PROGRAM
 # -----------------------------------------------------------------------------
@@ -95,7 +104,11 @@ while test $# -gt 0; do
 		;;
 	-e | --edit)
 		edit_layout
-		break
+		exit 0
+		;;
+	-d | --delete)
+		delete_layout
+		exit 0
 		;;
 	*)
 		echo "Invalid option $1. Use -h or --help to show available options"
