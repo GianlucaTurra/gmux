@@ -46,11 +46,11 @@ print_help() {
 	echo "logs available at $LOG_FILE"
 }
 
-# Use gum to prompt the user for the creation of a new layout. One the input is
+# Prompt the user for the creation of a new layout. One the input is
 # received a shell script is created and opened with the default text editor.
 # The script is also made executable at the end.
 create_new_layout() {
-	NAME=$(gum input --placeholder "Layout name")
+	read -p "Layout name: " NAME
 	if [ -n "$NAME" ]; then
 		FILE_NAME="$LAYOUT_FOLDER/$NAME.gmux.sh"
 		echo "$(date +%T) INFO: creating layout file $FILE_NAME from template" >>"$LOG_FILE"
@@ -71,7 +71,7 @@ create_new_layout() {
 
 # Edit a selected layout file using the default editor of the user
 edit_layout() {
-	CHOICE=$(ls -1 $LAYOUT_FOLDER | sed -e 's/\.gmux.sh$//' | gum filter)
+	CHOICE=$(ls -1 $LAYOUT_FOLDER | sed -e 's/\.gmux.sh$//' | fzf --height 40% --style minimal --preview '' --reverse)
 	if [ -n "$CHOICE" ]; then
 		"$EDITOR" "$LAYOUT_FOLDER/$CHOICE.gmux.sh"
 	fi
@@ -79,7 +79,7 @@ edit_layout() {
 
 # Delete a selected layout file
 delete_layout() {
-	CHOICE=$(ls -1 $LAYOUT_FOLDER | sed -e 's/\.gmux.sh$//' | gum filter)
+	CHOICE=$(ls -1 $LAYOUT_FOLDER | sed -e 's/\.gmux.sh$//' | fzf --height 40% --style minimal --preview '' --reverse)
 	if [ -n "$CHOICE" ]; then
 		rm "$LAYOUT_FOLDER/$CHOICE.gmux.sh"
 	fi
@@ -118,7 +118,7 @@ while test $# -gt 0; do
 done
 
 # Open existing layout and execute the script
-CHOICE=$(ls -1 $LAYOUT_FOLDER | sed -e 's/\.gmux.sh$//' | gum filter)
+CHOICE=$(ls -1 $LAYOUT_FOLDER | sed -e 's/\.gmux.sh$//' | fzf --height 40% --style minimal --preview '' --reverse)
 if [ -n "$CHOICE" ]; then
 	sh -c "$LAYOUT_FOLDER/$CHOICE.gmux.sh"
 fi

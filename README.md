@@ -1,16 +1,18 @@
 # GMUX
 
-A simple CLI tool to create and manage tmux layouts as shell scripts.
+A simple and light CLI tool to create and manage tmux layouts as shell scripts.
 
 ## Dependencies
 
-The only dependency of gmux is [gum](https://github.com/charmbracelet/gum).  
-I'm lazy so refer to their docs to install it.
+The only dependency of gmux is [fzf](https://github.com/junegunn/fzf).  
+I'm lazy so refer to their
+[docs](https://github.com/junegunn/fzf?tab=readme-ov-file#installation) to
+install it.
 
 Ok, ok here's how you install it with linux brew:
 
 ```sh
-brew install gum
+brew install fzf
 ```
 
 ## Installation
@@ -34,7 +36,9 @@ Here's a list of the available way to use `gmux`:
   created script in your $EDITOR
 - `gmux -e` or `gmux --edit`: show available layouts and open the selected in
   your $EDITOR for edit
-- `gmux -h` or `gmux --edit`: call for help
+- `gmux -d` or `gmux --delete`: show available layouts and delete the selected
+  one
+- `gmux -h` or `gmux --help`: call for help
 
 Layouts are saved in `$HOME/gmux/layouts/` with the `.gmux.sh` extension.  
 How you define a session is up to you and your imagination.  
