@@ -9,6 +9,13 @@ TEMPLATE_FOLDER="$LOCAL_FOLDER/templates"
 BASIC_TEMPLATE="$TEMPLATE_FOLDER/template"
 LOG_FILE="$LOCAL_FOLDER/gmux.log"
 
+# Write to log file
+# 1: log level
+# 2: log message
+log_to_file() {
+	echo "$(date +%T) $1: $2" >>"$LOG_FILE"
+}
+
 # Setup folders and files necessary for the script execution
 setup() {
 	if [ ! -d "$LOCAL_FOLDER" ]; then
@@ -18,15 +25,15 @@ setup() {
 		touch "$LOG_FILE"
 	fi
 	if [ ! -d "$LAYOUT_FOLDER" ]; then
-		echo "$(date +%T) INFO: creating layout folder" >>"$LOG_FILE"
+		log_to_file "INFO" "creating layout folder"
 		mkdir "$LAYOUT_FOLDER"
 	fi
 	if [ ! -d "$TEMPLATE_FOLDER" ]; then
-		echo "$(date +%T) INFO: creating template folder" >>"$LOG_FILE"
+		log_to_file "INFO" "creating template folder"
 		mkdir "$TEMPLATE_FOLDER"
 	fi
 	if [ ! -f "$BASIC_TEMPLATE" ]; then
-		echo "$(date +%T) INFO: creating template file" >>"$LOG_FILE"
+		log_to_file "INFO" "creating template file"
 		touch "$BASIC_TEMPLATE"
 		echo "#! /bin/sh" >"$BASIC_TEMPLATE"
 		echo "set -o errexit" >>"$BASIC_TEMPLATE"
@@ -53,7 +60,7 @@ create_new_layout() {
 	read -p "Layout name: " NAME
 	if [ -n "$NAME" ]; then
 		FILE_NAME="$LAYOUT_FOLDER/$NAME.gmux.sh"
-		echo "$(date +%T) INFO: creating layout file $FILE_NAME from template" >>"$LOG_FILE"
+		log_to_file "INFO" "creating layout file $FILE_NAME"
 		cp "$BASIC_TEMPLATE" "$FILE_NAME"
 		echo "" >>"$FILE_NAME"
 		echo "tmux new-session -s \"$NAME\" -d" >>"$FILE_NAME"
@@ -63,7 +70,7 @@ create_new_layout() {
 		echo "# tmux new-window -n \"Another-Window\" -t \"Test\"" >>$FILE_NAME
 		echo "# tmux split-window -t \"Test:Another-Window\" -v -l 50% -c /path/to/workdir" >>$FILE_NAME
 		$EDITOR "$FILE_NAME"
-		echo "$(date +%T) TRACE: make $FILE_NAME executable" >>"$LOG_FILE"
+		log_to_file "INFO" "making $FILE_NAME executable"
 		chmod +x "$FILE_NAME"
 	fi
 	clear
