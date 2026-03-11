@@ -56,6 +56,11 @@ create_new_layout() {
 		cp "$BASIC_TEMPLATE" "$FILE_NAME"
 		echo "" >>"$FILE_NAME"
 		echo "tmux new-session -s \"$NAME\" -d" >>"$FILE_NAME"
+		echo "" >>"$FILE_NAME"
+		echo "# Example of layout" >>$FILE_NAME
+		echo "# tmux new-session -d -s "Example" -n "Example-Window" -c /path/to/workdir" >>"$FILE_NAME"
+		echo "# tmux new-window -n \"Another-Window\" -t \"Test\"" >>$FILE_NAME
+		echo "# tmux split-window -t \"Test:Another-Window\" -v -l 50% -c /path/to/workdir" >>$FILE_NAME
 		$EDITOR "$FILE_NAME"
 		echo "$(date +%T) TRACE: make $FILE_NAME executable" >>"$LOG_FILE"
 		chmod +x "$FILE_NAME"
